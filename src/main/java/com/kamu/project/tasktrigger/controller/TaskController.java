@@ -5,10 +5,9 @@ import com.kamu.project.tasktrigger.dto.TaskResponse;
 import com.kamu.project.tasktrigger.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
@@ -21,6 +20,11 @@ public class TaskController {
     public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest request){
         TaskResponse response = taskService.createTask(request);
         return ResponseEntity.accepted().body(response); // 202 accepted hhtp kodu donuyor
+    }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskResponse> getTask(@PathVariable UUID taskId){
+        return ResponseEntity.ok(taskService.getTaskStatus(taskId));
     }
 
 }
